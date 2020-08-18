@@ -9,7 +9,7 @@ import Error404 from "./pages/Errors/404"
 
 import "bootstrap/dist/css/bootstrap.min.css"
 import './index.css';
-import { BrowserRouter, Switch, Route, useLocation } from "react-router-dom"
+import { BrowserRouter, Switch, Route, Redirect, useLocation } from "react-router-dom"
 
 
 
@@ -30,10 +30,14 @@ const App = ()=>{
             <MainLayout>
                 <ScrollToTop />
                 <Switch>
-                    <Route exact path="/" component={Home}></Route>
-                    <Route exact path="/populares" component={Populares}></Route>
-                    <Route exact path="/movies/:id" component={DetailMovie}></Route>
-                    <Route exact path="*" component={Error404}></Route>
+                    
+                    {/* IN GITHUB PAGES */}
+                    <Redirect push from="/cinema" to="/" />
+
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/populares" component={Populares} />
+                    <Route exact path="/movies/:id" component={DetailMovie} />
+                    <Route exact path="*" component={Error404} />
                 </Switch>
             </MainLayout>
         </BrowserRouter>
