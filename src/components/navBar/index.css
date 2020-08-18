@@ -1,0 +1,3 @@
+.navbar .navbar-nav .nav-link:not(.active){
+    opacity: .5;
+}
