@@ -1,35 +1,55 @@
 import React from "react"
 import { Link, NavLink } from "react-router-dom"
 import "./index.css"
+import queryString from 'query-string'
+import { useState, useEffect } from "react"
+import { useHistory, useLocation } from "react-router-dom";
 
-export default ()=>(
-    <nav className="navbar navbar-expand-lg navbar-light bg-dark fixed-top" style={{ boxShadow: "0 2px 12px #000"}}>
-        <Link className="navbar-brand text-light" to="/">Cinema</Link>
+export default ()=>{
+    const
+        [ search, setSearch ] = useState(""),
+        location = useLocation(),
+        history = useHistory();
 
-        <div className="collapse navbar-collapse">
 
-            <ul className="navbar-nav mr-auto">
-                <li>
-                    <NavLink exact className="nav-link text-light" to="/" activeClassName="active">Home</NavLink>
-                    {/* <a className="nav-link text-light" href="/">Inicio</a> */}
-                </li>
+    useEffect(()=>{
+        if(search.length){
+            history.push("/movies/search?query=" + search)
+        }else{
+            const { query = "" } = queryString.parse(location.search)
+            if(query.length) setSearch(query)
+        }
+    }, [ search ])
 
-                <li>
-                    <NavLink exact className="nav-link text-light" to="/populares" activeClassName="active">Populares</NavLink>
-                    {/* <a className="nav-link text-light" href="/populares">Populares</a> */}
-                </li>
+    return(
+        <nav className="navbar navbar-expand-lg navbar-light bg-dark fixed-top" style={{ boxShadow: "0 2px 12px #000"}}>
+            <Link className="navbar-brand text-light" to="/">Cinema</Link>
 
-            </ul>
+            <div className="collapse navbar-collapse">
 
-            <form className="form-inline my-2 my-lg-0">
-                <input 
-                    type="search" 
-                    className="form-control mr-sm-2" 
-                    style={{ fontSize:   "15px", height: "35px" }}
-                    placeholder="Buscar"
-                />
-            </form>
+                <ul className="navbar-nav mr-auto">
+                    <li>
+                        <NavLink exact className="nav-link text-light" to="/" activeClassName="active">Home</NavLink>
+                    </li>
 
-        </div>
-    </nav>
-)
+                    <li>
+                        <NavLink exact className="nav-link text-light" to="/populares" activeClassName="active">Populares</NavLink>
+                    </li>
+
+                </ul>
+
+                <form className="form-inline my-2 my-lg-0">
+                    <input 
+                        type="search" 
+                        className="form-control mr-sm-2" 
+                        style={{ fontSize:   "15px", height: "35px" }}
+                        onChange={ ({ target })=> setSearch(target.value)}
+                        value={search}
+                        placeholder="Buscar"
+                    />
+                </form>
+
+            </div>
+        </nav>
+    )
+}

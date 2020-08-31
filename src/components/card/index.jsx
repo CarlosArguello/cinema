@@ -9,7 +9,8 @@ export default ({ movie })=>{
         overflow: "hidden",
         textOverflow: "ellipsis"
     }:{}
-
+    // alert(movie.poster_path)
+    if(movie.poster_path == null) return null;
     return(
         <div 
             className="card" 
