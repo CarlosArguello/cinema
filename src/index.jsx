@@ -26,7 +26,7 @@ const ScrollToTop = ()=> {
 
 const App = ()=>{
     return (
-        <BrowserRouter>
+        <BrowserRouter basename="/cinema">
             <MainLayout>
                 <ScrollToTop />
                 <Switch>
