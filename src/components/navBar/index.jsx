@@ -8,16 +8,20 @@ import { useHistory, useLocation } from "react-router-dom";
 export default ()=>{
     const
         [ search, setSearch ] = useState(""),
+        [ loadPage, setLoadPage ] = useState(false),
         location = useLocation(),
-        history = useHistory();
+        history = useHistory()
 
 
     useEffect(()=>{
         if(search.length){
             history.push("/movies/search?query=" + search)
         }else{
-            const { query = "" } = queryString.parse(location.search)
-            if(query.length) setSearch(query)
+            if(!loadPage){
+                const { query = "" } = queryString.parse(location.search)
+                if(query.length) setSearch(query)
+                setLoadPage(true)
+            }
         }
     }, [ search ])
 
